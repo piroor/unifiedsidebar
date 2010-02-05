@@ -4,8 +4,6 @@ var UnifiedSidebarForVerticalTabbar = {
 	height : -1,
 
 	PREF_HEIGHT : 'extensions.unifiedsidebar@piro.sakura.ne.jp.height',
-	Prefs : Components.classes['@mozilla.org/preferences;1']
-				.getService(Components.interfaces.nsIPrefBranch),
 
 	get sidebarBox()
 	{
@@ -14,7 +12,7 @@ var UnifiedSidebarForVerticalTabbar = {
 
 	get sidebarHeader()
 	{
-		return document.getElementById('sidebar-header');
+		return document.getElementById('sidebar-header') || document.getElementsByTagName('sidebarheader')[0];
 	},
 
 	get sidebarTitle()
@@ -36,14 +34,21 @@ var UnifiedSidebarForVerticalTabbar = {
 	{
 		window.removeEventListener('DOMContentLoaded', this, false);
 
+		window.addEventListener('load', this, false);
 		window.addEventListener('unload', this, false);
 		window.addEventListener('resize', this, false);
 		window.addEventListener('TreeStyleTabAutoHideStateChange', this, false);
 		window.addEventListener('TreeStyleTabTabbarPositionChanged', this, false);
 		this.sidebarBox.addEventListener('DOMAttrModified', this, false);
 		this.sidebarHeader.addEventListener('mousedown', this, false);
+		this.addPrefListener(this);
 
-		this.height = this.Prefs.getIntPref(this.PREF_HEIGHT);
+		this.height = this.getPref(this.PREF_HEIGHT);
+	},
+
+	initWithDelay : function()
+	{
+		window.removeEventListener('load', this, false);
 		this.updateStyle();
 	},
 
@@ -55,6 +60,8 @@ var UnifiedSidebarForVerticalTabbar = {
 		window.removeEventListener('TreeStyleTabTabbarPositionChanged', this, false);
 		this.sidebarBox.removeEventListener('DOMAttrModified', this, false);
 		this.sidebarHeader.removeEventListener('mousedown', this, false);
+		this.removePrefListener(this);
+
 		this.endResize();
 	},
 
@@ -64,6 +71,10 @@ var UnifiedSidebarForVerticalTabbar = {
 		{
 			case 'DOMContentLoaded':
 				this.init();
+				return;
+
+			case 'load':
+				this.initWithDelay();
 				return;
 
 			case 'unload':
@@ -108,8 +119,27 @@ var UnifiedSidebarForVerticalTabbar = {
 	{
 		var sidebarBox = this.sidebarBox.boxObject;
 		this.height = sidebarBox.screenY + sidebarBox.height - aEvent.screenY + this.resizingOffsetY;
-		this.Prefs.setIntPref(this.PREF_HEIGHT, this.height);
+		this.setPref(this.PREF_HEIGHT, this.height);
 		this.updateSize();
+	},
+
+
+	domains : [
+		'verttabbar.'
+	],
+	observe : function(aSubject, aTopic, aPrefName)
+	{
+		if (aTopic != 'nsPref:changed') return;
+
+		switch (aPrefName)
+		{
+			case 'verttabbar.position':
+				this.updateStyle();
+				return;
+
+			default:
+				return;
+		}
 	},
 
 
@@ -196,5 +226,6 @@ var UnifiedSidebarForVerticalTabbar = {
 		}
 	}
 };
+UnifiedSidebarForVerticalTabbar.__proto__ = window['piro.sakura.ne.jp'].prefs;
 
 window.addEventListener('DOMContentLoaded', UnifiedSidebarForVerticalTabbar, false);
