@@ -30,6 +30,11 @@ var UnifiedSidebarForVerticalTabbar = {
 		return document.getElementById('sidebar');
 	},
 
+	get sidebarSplitter()
+	{
+		return document.getElementById('sidebar-splitter');
+	},
+
 	init : function()
 	{
 		window.removeEventListener('DOMContentLoaded', this, false);
@@ -125,7 +130,8 @@ var UnifiedSidebarForVerticalTabbar = {
 
 
 	domains : [
-		'verttabbar.'
+		'verttabbar.', // VertTabbar https://addons.mozilla.org/firefox/addon/8045
+		'extensions.tabkit.' // Tab Kit https://addons.mozilla.org/firefox/addon/5447
 	],
 	observe : function(aSubject, aTopic, aPrefName)
 	{
@@ -134,7 +140,14 @@ var UnifiedSidebarForVerticalTabbar = {
 		switch (aPrefName)
 		{
 			case 'verttabbar.position':
+			case 'extensions.tabkit.tabbarPosition':
 				this.updateStyle();
+				return;
+
+			case 'extensions.tabkit.sidebarPosition': // top/bottom sidebar breaks the flexibility.
+				if (this.getPref(aPrefName) != 1 || this.getPref(aPrefName) != 2) {
+					this.setPref(aPrefName, 1);
+				}
 				return;
 
 			default:
@@ -175,11 +188,13 @@ var UnifiedSidebarForVerticalTabbar = {
 			this.sidebarBox.style.position = 'fixed';
 			this.sidebarBox.style.mozBoxOrient = 'vertical';
 			this.sidebarHeader.style.cursor = this.sidebarTitle.style.cursor = this.sidebarThrobber.style.cursor = 's-resize';
+			this.sidebarSplitter.style.display = 'none';
 		}
 		else {
 			this.sidebarBox.style.position = '';
 			this.sidebarBox.style.mozBoxOrient = '';
 			this.sidebarHeader.style.cursor = this.sidebarTitle.style.cursor = this.sidebarThrobber.style.cursor = '';
+			this.sidebarSplitter.style.display = '';
 		}
 		this.updateSize();
 	},
