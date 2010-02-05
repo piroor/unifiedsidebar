@@ -98,7 +98,7 @@ var UnifiedSidebarForVerticalTabbar = {
 
 			case 'DOMAttrModified':
 				if (aEvent.attrName == 'hidden')
-					this.updateSize();
+					this.updateStyle();
 				return;
 
 			case 'mousedown':
@@ -186,14 +186,16 @@ var UnifiedSidebarForVerticalTabbar = {
 	{
 		var sidebarBox = this.sidebarBox;
 		if (this.isVertical(gBrowser)) {
-			this.sidebarBox.style.position = 'fixed';
-			this.sidebarBox.style.mozBoxOrient = 'vertical';
+			sidebarBox.removeAttribute('width');
+			sidebarBox.style.position = 'fixed';
+			sidebarBox.style.mozBoxOrient = 'vertical';
 			this.sidebarHeader.style.cursor = this.sidebarTitle.style.cursor = this.sidebarThrobber.style.cursor = 's-resize';
 			this.sidebarSplitter.style.display = 'none';
+			this.sidebarSplitter.nextSibling.removeAttribute('width');
 		}
 		else {
-			this.sidebarBox.style.position = '';
-			this.sidebarBox.style.mozBoxOrient = '';
+			sidebarBox.style.position = '';
+			sidebarBox.style.mozBoxOrient = '';
 			this.sidebarHeader.style.cursor = this.sidebarTitle.style.cursor = this.sidebarThrobber.style.cursor = '';
 			this.sidebarSplitter.style.display = '';
 		}
