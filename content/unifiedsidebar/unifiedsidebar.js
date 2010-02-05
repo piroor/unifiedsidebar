@@ -81,7 +81,7 @@ var UnifiedSidebarForVerticalTabbar = {
 
 			case 'DOMAttrModified':
 				if (aEvent.attrName == 'hidden')
-					this.onShowHide();
+					this.updateSize();
 				return;
 
 			case 'mousedown':
@@ -95,18 +95,6 @@ var UnifiedSidebarForVerticalTabbar = {
 			case 'mousemove':
 				this.onMouseMove(aEvent);
 				return;
-		}
-	},
-
-	onShowHide : function()
-	{
-		if (this.isVertical(gBrowser) && !this.sidebarBox.hidden) {
-			this.sidebarBox.removeAttribute('hidden');
-			this.updateSize();
-		}
-		else {
-			this.sidebarBox.setAttribute('hidden', true);
-			gBrowser.mStrip.style.marginBottom = '';
 		}
 	},
 
