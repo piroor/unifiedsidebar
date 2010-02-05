@@ -35,6 +35,7 @@ var UnifiedSidebarForVerticalTabbar = {
 		return document.getElementById('sidebar-splitter');
 	},
 
+
 	init : function()
 	{
 		window.removeEventListener('DOMContentLoaded', this, false);
