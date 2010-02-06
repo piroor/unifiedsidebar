@@ -97,7 +97,8 @@ var UnifiedSidebarForVerticalTabbar = {
 				return;
 
 			case 'DOMAttrModified':
-				if (aEvent.attrName == 'hidden')
+				if (aEvent.attrName == 'hidden' ||
+					(!this.sidebarBox.hidden && aEvent.attrName == 'sidebarcommand'))
 					this.updateStyle();
 				return;
 
