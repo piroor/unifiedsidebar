@@ -3,6 +3,9 @@ var UnifiedSidebarForVerticalTabbar = {
 	resizingOffsetY : -1,
 	height : -1,
 
+	sizeBackup : null,
+	sizeBackupTargets : 'width height minWidth minHeight maxWidth maxHeight'.split(' '),
+
 	PREF_HEIGHT : 'extensions.unifiedsidebar@piro.sakura.ne.jp.height',
 
 	get sidebarBox()
@@ -186,7 +189,22 @@ var UnifiedSidebarForVerticalTabbar = {
 	updateStyle : function()
 	{
 		var sidebarBox = this.sidebarBox;
+		var sidebarFrame = this.sidebarFrame;
 		if (this.isVertical(gBrowser)) {
+			if (!this.sizeBackup) {
+				this.sizeBackup = {
+					box : this.sizeBackupTargets.map(function(aTarget) {
+						var value = sidebarBox.style[aTarget] || '';
+						sidebarBox.style[aTarget] = '';
+						return value;
+					}),
+					frame : this.sizeBackupTargets.map(function(aTarget) {
+						var value = sidebarFrame.style[aTarget] || '';
+						sidebarFrame.style[aTarget] = '';
+						return value;
+					})
+				};
+			}
 			sidebarBox.removeAttribute('width');
 			sidebarBox.style.position = 'fixed';
 			sidebarBox.style.mozBoxOrient = 'vertical';
@@ -195,6 +213,15 @@ var UnifiedSidebarForVerticalTabbar = {
 			this.sidebarSplitter.nextSibling.removeAttribute('width');
 		}
 		else {
+			if (this.sizeBackup) {
+				this.sizeBackup.box.forEach(function(aValue, aIndex) {
+					sidebarBox.style[this.sizeBackupTargets[aIndex]] = aValue;
+				}, this);
+				this.sizeBackup.frame.forEach(function(aValue, aIndex) {
+					sidebarFrame.style[this.sizeBackupTargets[aIndex]] = aValue;
+				}, this);
+				this.sizeBackup = null;
+			}
 			sidebarBox.style.position = '';
 			sidebarBox.style.mozBoxOrient = '';
 			this.sidebarHeader.style.cursor = this.sidebarTitle.style.cursor = this.sidebarThrobber.style.cursor = '';
