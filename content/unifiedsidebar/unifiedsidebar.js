@@ -4,7 +4,14 @@ var UnifiedSidebarForVerticalTabbar = {
 	height : -1,
 
 	sizeBackup : null,
-	sizeBackupTargets : 'width height minWidth minHeight maxWidth maxHeight'.split(' '),
+	sizeBackupTargets : [
+		{ name : 'width',     default : '' },
+		{ name : 'minWidth',  default : '0' },
+		{ name : 'maxWidth',  default : 'none' },
+		{ name : 'height',    default : '' },
+		{ name : 'minHeight', default : '0' },
+		{ name : 'maxHeight', default : 'none' }
+	],
 
 	PREF_HEIGHT : 'extensions.unifiedsidebar@piro.sakura.ne.jp.height',
 
@@ -194,13 +201,13 @@ var UnifiedSidebarForVerticalTabbar = {
 			if (!this.sizeBackup) {
 				this.sizeBackup = {
 					box : this.sizeBackupTargets.map(function(aTarget) {
-						var value = sidebarBox.style[aTarget] || '';
-						sidebarBox.style[aTarget] = '';
+						var value = sidebarBox.style[aTarget.name] || '';
+						sidebarBox.style[aTarget.name] = aTarget.default;
 						return value;
 					}),
 					frame : this.sizeBackupTargets.map(function(aTarget) {
-						var value = sidebarFrame.style[aTarget] || '';
-						sidebarFrame.style[aTarget] = '';
+						var value = sidebarFrame.style[aTarget.name] || '';
+						sidebarFrame.style[aTarget.name] = aTarget.default;
 						return value;
 					})
 				};
@@ -215,10 +222,10 @@ var UnifiedSidebarForVerticalTabbar = {
 		else {
 			if (this.sizeBackup) {
 				this.sizeBackup.box.forEach(function(aValue, aIndex) {
-					sidebarBox.style[this.sizeBackupTargets[aIndex]] = aValue;
+					sidebarBox.style[this.sizeBackupTargets[aIndex].name] = aValue;
 				}, this);
 				this.sizeBackup.frame.forEach(function(aValue, aIndex) {
-					sidebarFrame.style[this.sizeBackupTargets[aIndex]] = aValue;
+					sidebarFrame.style[this.sizeBackupTargets[aIndex].name] = aValue;
 				}, this);
 				this.sizeBackup = null;
 			}
