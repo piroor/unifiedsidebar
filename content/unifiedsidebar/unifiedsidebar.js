@@ -45,6 +45,12 @@ var UnifiedSidebarForVerticalTabbar = {
 		return document.getElementById('sidebar-splitter');
 	},
 
+	get sidebarHidden()
+	{
+		var box = this.sidebarBox;
+		return box.hidden || box.collapsed;
+	},
+
 
 	init : function()
 	{
@@ -107,8 +113,11 @@ var UnifiedSidebarForVerticalTabbar = {
 				return;
 
 			case 'DOMAttrModified':
-				if (aEvent.attrName == 'hidden' ||
-					(!this.sidebarBox.hidden && aEvent.attrName == 'sidebarcommand'))
+				if (
+					aEvent.attrName == 'hidden' ||
+					aEvent.attrName == 'collapsed' ||
+					(!this.sidebarHidden && aEvent.attrName == 'sidebarcommand')
+					)
 					this.updateStyle();
 				return;
 
@@ -242,7 +251,7 @@ var UnifiedSidebarForVerticalTabbar = {
 		var header = this.sidebarHeader;
 		var sidebar = this.sidebarFrame;
 		var sidebarBox = this.sidebarBox;
-		if (this.isVertical(gBrowser) && !sidebarBox.hidden) {
+		if (this.isVertical(gBrowser) && !this.sidebarHidden) {
 			let rootBox = document.documentElement.boxObject;
 			let browserBox = gBrowser.boxObject;
 
