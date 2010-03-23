@@ -51,6 +51,16 @@ var UnifiedSidebarForVerticalTabbar = {
 		return box.hidden || box.collapsed;
 	},
 
+	getTabStrip : function(aTabBrowser) 
+	{
+		return aTabBrowser.mStrip || aTabBrowser.tabContainer.parentNode;
+	},
+
+	get tabStrip() 
+	{
+		return this.getTabStrip(gBrowser);
+	},
+
 
 	init : function()
 	{
@@ -273,7 +283,7 @@ var UnifiedSidebarForVerticalTabbar = {
 
 			let height = this.height < 0 ? parseInt(browserBox.height / 2) : this.height ;
 			let offset = parseInt(sidebarBox.style.bottom.replace('px', ''));
-			gBrowser.mStrip.style.marginBottom = height+'px';
+			this.tabStrip.style.marginBottom = height+'px';
 			sidebarBox.style.height = height+'px';
 			sidebar.style.height = (height - header.boxObject.height)+'px';
 		}
@@ -282,7 +292,7 @@ var UnifiedSidebarForVerticalTabbar = {
 			sidebarBox.style.left = '';
 
 			header.style.width = sidebar.style.width = sidebarBox.style.width = '';
-			gBrowser.mStrip.style.marginBottom = '';
+			this.tabStrip.style.marginBottom = '';
 			sidebarBox.style.height = '';
 			sidebar.style.height = '';
 		}
