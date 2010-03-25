@@ -56,11 +56,6 @@ var UnifiedSidebarForVerticalTabbar = {
 		return aTabBrowser.mStrip || aTabBrowser.tabContainer.parentNode;
 	},
 
-	get tabStrip() 
-	{
-		return this.getTabStrip(gBrowser);
-	},
-
 
 	init : function()
 	{
@@ -261,9 +256,13 @@ var UnifiedSidebarForVerticalTabbar = {
 		var header = this.sidebarHeader;
 		var sidebar = this.sidebarFrame;
 		var sidebarBox = this.sidebarBox;
+
+		var rootBox = document.documentElement.boxObject;
+		var browserBox = gBrowser.boxObject;
+		var strip = this.getTabStrip(gBrowser);
+		var isFloating = window.getComputedStyle(strip, '').getPropertyValue('position') != 'static'
+
 		if (this.isVertical(gBrowser) && !this.sidebarHidden) {
-			let rootBox = document.documentElement.boxObject;
-			let browserBox = gBrowser.boxObject;
 
 			sidebarBox.style.bottom = (rootBox.height - (browserBox.screenY - rootBox.screenY) - browserBox.height)+'px';
 
@@ -283,7 +282,14 @@ var UnifiedSidebarForVerticalTabbar = {
 
 			let height = this.height < 0 ? parseInt(browserBox.height / 2) : this.height ;
 			let offset = parseInt(sidebarBox.style.bottom.replace('px', ''));
-			this.tabStrip.style.marginBottom = height+'px';
+
+			strip.style.marginBottom = height+'px';
+			if (isFloating) {
+				let tabbarHeight = browserBox.height - height;
+				strip.height = tabbarHeight+'px';
+				gBrowser.tabContainer.height = tabbarHeight+'px';
+			}
+
 			sidebarBox.style.height = height+'px';
 			sidebar.style.height = (height - header.boxObject.height)+'px';
 		}
@@ -292,7 +298,14 @@ var UnifiedSidebarForVerticalTabbar = {
 			sidebarBox.style.left = '';
 
 			header.style.width = sidebar.style.width = sidebarBox.style.width = '';
-			this.tabStrip.style.marginBottom = '';
+
+			strip.style.marginBottom = '';
+			if (isFloating) {
+				let tabbarHeight = browserBox.height;
+				strip.height = tabbarHeight+'px';
+				gBrowser.tabContainer.height = tabbarHeight+'px';
+			}
+
 			sidebarBox.style.height = '';
 			sidebar.style.height = '';
 		}
