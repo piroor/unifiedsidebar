@@ -289,8 +289,8 @@ var UnifiedSidebarForVerticalTabbar = {
 			strip.style.marginBottom = height+'px';
 			if (isFloating) {
 				let tabbarHeight = browserBox.height - height;
-				strip.height = tabbarHeight+'px';
-				gBrowser.tabContainer.height = tabbarHeight+'px';
+				strip.height = tabbarHeight;
+				gBrowser.tabContainer.height = tabbarHeight;
 			}
 
 			sidebarBox.style.height = height+'px';
@@ -303,10 +303,10 @@ var UnifiedSidebarForVerticalTabbar = {
 			header.style.width = sidebar.style.width = sidebarBox.style.width = '';
 
 			strip.style.marginBottom = '';
-			if (isFloating) {
+			if (isFloating && this.isVertical(gBrowser)) {
 				let tabbarHeight = browserBox.height;
-				strip.height = tabbarHeight+'px';
-				gBrowser.tabContainer.height = tabbarHeight+'px';
+				strip.height = tabbarHeight;
+				gBrowser.tabContainer.height = tabbarHeight;
 			}
 
 			sidebarBox.style.height = '';
