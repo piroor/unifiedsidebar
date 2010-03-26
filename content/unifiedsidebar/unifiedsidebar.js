@@ -53,7 +53,10 @@ var UnifiedSidebarForVerticalTabbar = {
 
 	getTabStrip : function(aTabBrowser) 
 	{
-		return aTabBrowser.mStrip || aTabBrowser.tabContainer.parentNode;
+		var strip = aTabBrowser.mStrip;
+		return (strip && strip.localName == 'hbox') ?
+				strip :
+				aTabBrowser.tabContainer.parentNode;
 	},
 
 
