@@ -112,6 +112,10 @@ var UnifiedSidebarForVerticalTabbar = {
 				return;
 
 			case 'resize':
+				// for Tree Style Tab on Firefox 3.7 or later
+				window.setTimeout(function(aSelf) {
+					aSelf.updateSize();
+				}, 0, this);
 			case 'TreeStyleTabAutoHideStateChange':
 				this.updateSize();
 				return;
