@@ -1,3 +1,5 @@
 content	unifiedsidebar	jar:chrome/unifiedsidebar.jar!/content/unifiedsidebar/
 
 overlay	chrome://browser/content/browser.xul	chrome://unifiedsidebar/content/unifiedsidebar.xul
+
+resource unifiedsidebar-modules modules/

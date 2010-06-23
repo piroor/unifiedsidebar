@@ -318,6 +318,10 @@ var UnifiedSidebarForVerticalTabbar = {
 		}
 	}
 };
-UnifiedSidebarForVerticalTabbar.__proto__ = window['piro.sakura.ne.jp'].prefs;
+(function() {
+	var namespace = {};
+	Components.utils.import('resource://unifiedsidebar-modules/prefs.js', namespace);
+	UnifiedSidebarForVerticalTabbar.__proto__ = namespace.prefs;
+})();
 
 window.addEventListener('DOMContentLoaded', UnifiedSidebarForVerticalTabbar, false);
