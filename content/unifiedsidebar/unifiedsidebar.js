@@ -265,7 +265,9 @@ var UnifiedSidebarForVerticalTabbar = {
 		var sidebarBox = this.sidebarBox;
 
 		var rootBox = document.documentElement.boxObject;
-		var browserBox = gBrowser.boxObject;
+		var browserBox = document.getElementById('verticaltabs-box') ? // Vertical Tabs ( https://addons.mozilla.org/firefox/addon/108862/ )
+							document.getElementById('browser').boxObject :
+							gBrowser.boxObject ;
 		var strip = this.getTabStrip(gBrowser);
 		var isFloating = window.getComputedStyle(strip, '').getPropertyValue('position') != 'static'
 
