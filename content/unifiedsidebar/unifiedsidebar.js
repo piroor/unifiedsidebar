@@ -312,7 +312,7 @@ var UnifiedSidebarForVerticalTabbar = {
 			if (isFloating && this.isVertical(gBrowser)) {
 				let tabbarHeight = browserBox.height;
 				strip.height = tabbarHeight;
-				gBrowser.tabContainer.height = tabbarHeight;
+				gBrowser.tabContainer.removeAttribute('height');
 			}
 
 			sidebarBox.style.height = '';
