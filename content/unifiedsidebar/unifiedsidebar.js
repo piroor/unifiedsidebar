@@ -293,10 +293,13 @@ var UnifiedSidebarForVerticalTabbar = {
 			let offset = parseInt(sidebarBox.style.bottom.replace('px', ''));
 
 			strip.style.marginBottom = height+'px';
-			if (isFloating) {
+			if (isFloating) { // Tree Style Tab
 				let tabbarHeight = browserBox.height - height;
-				strip.height = tabbarHeight;
-				gBrowser.tabContainer.height = tabbarHeight;
+				strip.style.height = (strip.height = tabbarHeight)+'px';
+				if (strip.treeStyleTabToolbarInnerBox)
+					strip.treeStyleTabToolbarInnerBox.height = tabbarHeight;
+				else
+					gBrowser.tabContainer.height = tabbarHeight;
 			}
 
 			sidebarBox.style.height = height+'px';
@@ -309,10 +312,13 @@ var UnifiedSidebarForVerticalTabbar = {
 			header.style.width = sidebar.style.width = sidebarBox.style.width = '';
 
 			strip.style.marginBottom = '';
-			if (isFloating && this.isVertical(gBrowser)) {
+			if (isFloating && this.isVertical(gBrowser)) { // Tree Style Tab
 				let tabbarHeight = browserBox.height;
-				strip.height = tabbarHeight;
-				gBrowser.tabContainer.removeAttribute('height');
+				strip.style.height = (strip.height = tabbarHeight)+'px';
+				if (strip.treeStyleTabToolbarInnerBox)
+					strip.treeStyleTabToolbarInnerBox.height = tabbarHeight;
+				else
+					gBrowser.tabContainer.removeAttribute('height');
 			}
 
 			sidebarBox.style.height = '';
