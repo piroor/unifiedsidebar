@@ -71,6 +71,11 @@ var UnifiedSidebarForVerticalTabbar = {
 		window.addEventListener('TreeStyleTabTabbarPositionChanged', this, false);
 		this.sidebarBox.addEventListener('DOMAttrModified', this, false);
 		this.sidebarHeader.addEventListener('mousedown', this, false);
+
+		// for TotalToolbar + Tree Style Tab on Firefox 4.0 or later
+		var menu = document.getElementById('tt-toolbar-properties');
+		if (menu) menu.addEventListener('command', this, false);
+
 		this.addPrefListener(this);
 
 		this.height = this.getPref(this.PREF_HEIGHT);
@@ -90,6 +95,11 @@ var UnifiedSidebarForVerticalTabbar = {
 		window.removeEventListener('TreeStyleTabTabbarPositionChanged', this, false);
 		this.sidebarBox.removeEventListener('DOMAttrModified', this, false);
 		this.sidebarHeader.removeEventListener('mousedown', this, false);
+
+		// for TotalToolbar + Tree Style Tab on Firefox 4.0 or later
+		var menu = document.getElementById('tt-toolbar-properties');
+		if (menu) menu.removeEventListener('command', this, false);
+
 		this.removePrefListener(this);
 
 		this.endResize();
@@ -111,8 +121,10 @@ var UnifiedSidebarForVerticalTabbar = {
 				this.destroy();
 				return;
 
+			case 'command':
+				// for Total Toolbar
 			case 'resize':
-				// for Tree Style Tab on Firefox 3.7 or later
+				// for Tree Style Tab on Firefox 4.0 or later
 				window.setTimeout(function(aSelf) {
 					aSelf.updateSize();
 				}, 0, this);
