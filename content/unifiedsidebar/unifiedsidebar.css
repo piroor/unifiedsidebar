@@ -1,7 +1,19 @@
 #sidebar-box[unifiedsidebar-unified="true"] {
-	line-height: 0 !important;
+	font-size: 0rem; /* This is required to reduce blank spaces around
+	                    blank toolbox inserted by TotalToolbar.
+	                    This must be ignored by oldFirefox, so, use "0rem"
+	                    instead of simple "0". */
+	line-height: 0; /* This is required to reduce blank spaces between
+	                   sidebar-box contents. */
 }
 
 #sidebar-box[unifiedsidebar-unified="true"] > * {
-	width: inherit !important;
+	font-size: 1rem; /* This resets the font size to the one same to the root
+	                    element. */
+	line-height: 1;
+	max-width: none !important;
+	min-width: 0 !important;
+	width: inherit !important; /* "display:block" box doesn't expand
+	                              containing boxes, so, we have to specify
+	                              width of each box. */
 }
