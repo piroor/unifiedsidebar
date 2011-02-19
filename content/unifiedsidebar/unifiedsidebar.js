@@ -5,12 +5,12 @@ var UnifiedSidebarForVerticalTabbar = {
 
 	sizeBackup : null,
 	sizeBackupTargets : [
-		{ name : 'width',     default : '' },
-		{ name : 'minWidth',  default : '0' },
-		{ name : 'maxWidth',  default : 'none' },
-		{ name : 'height',    default : '' },
-		{ name : 'minHeight', default : '0' },
-		{ name : 'maxHeight', default : 'none' }
+		{ name : 'width',     CSSName : 'width',      default : '' },
+		{ name : 'minWidth',  CSSName : 'min-width',  default : '0' },
+		{ name : 'maxWidth',  CSSName : 'max-width',  default : 'none' },
+		{ name : 'height',    CSSName : 'height',     default : '' },
+		{ name : 'minHeight', CSSName : 'min-height', default : '0' },
+		{ name : 'maxHeight', CSSName : 'max-height', default : 'none' }
 	],
 
 	PREF_HEIGHT : 'extensions.unifiedsidebar@piro.sakura.ne.jp.height',
@@ -222,14 +222,24 @@ var UnifiedSidebarForVerticalTabbar = {
 			if (!this.sizeBackup) {
 				this.sizeBackup = {
 					box : this.sizeBackupTargets.map(function(aTarget) {
-						var value = sidebarBox.style[aTarget.name] || '';
-						sidebarBox.style[aTarget.name] = aTarget.default;
-						return value;
+						var style     = sidebarBox.style;
+						var value     = style[aTarget.name] || '';
+						var important = style.getPropertyPriority(aTarget.CSSName);
+						style.setProperty(aTarget.CSSName, aTarget.default, 'important');
+						return {
+							value     : value,
+							important : important
+						};
 					}),
 					frame : this.sizeBackupTargets.map(function(aTarget) {
-						var value = sidebarFrame.style[aTarget.name] || '';
-						sidebarFrame.style[aTarget.name] = aTarget.default;
-						return value;
+						var style     = sidebarFrame.style;
+						var value     = style[aTarget.name] || '';
+						var important = style.getPropertyPriority(aTarget.CSSName);
+						style.setProperty(aTarget.CSSName, aTarget.default, 'important');
+						return {
+							value     : value,
+							important : important
+						};
 					})
 				};
 			}
@@ -244,10 +254,18 @@ var UnifiedSidebarForVerticalTabbar = {
 		else {
 			if (this.sizeBackup) {
 				this.sizeBackup.box.forEach(function(aValue, aIndex) {
-					sidebarBox.style[this.sizeBackupTargets[aIndex].name] = aValue;
+					sidebarBox.style.setProperty(
+						this.sizeBackupTargets[aIndex].CSSName,
+						aValue.value,
+						aValue.important ? 'important' : ''
+					);
 				}, this);
 				this.sizeBackup.frame.forEach(function(aValue, aIndex) {
-					sidebarFrame.style[this.sizeBackupTargets[aIndex].name] = aValue;
+					sidebarFrame.style.setProperty(
+						this.sizeBackupTargets[aIndex].CSSName,
+						aValue.value,
+						aValue.important ? 'important' : ''
+					);
 				}, this);
 				this.sizeBackup = null;
 			}
