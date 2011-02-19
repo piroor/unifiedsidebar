@@ -1,0 +1,7 @@
+#sidebar-box[unifiedsidebar-unified="true"] {
+	line-height: 0 !important;
+}
+
+#sidebar-box[unifiedsidebar-unified="true"] > * {
+	width: inherit !important;
+}

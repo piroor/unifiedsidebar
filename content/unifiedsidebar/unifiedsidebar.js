@@ -239,6 +239,7 @@ var UnifiedSidebarForVerticalTabbar = {
 			this.sidebarHeader.style.cursor = this.sidebarTitle.style.cursor = this.sidebarThrobber.style.cursor = 's-resize';
 			this.sidebarSplitter.style.display = 'none';
 			this.sidebarSplitter.nextSibling.removeAttribute('width');
+			sidebarBox.setAttribute('unifiedsidebar-unified', true);
 		}
 		else {
 			if (this.sizeBackup) {
@@ -254,6 +255,7 @@ var UnifiedSidebarForVerticalTabbar = {
 			sidebarBox.style.mozBoxOrient = '';
 			this.sidebarHeader.style.cursor = this.sidebarTitle.style.cursor = this.sidebarThrobber.style.cursor = '';
 			this.sidebarSplitter.style.display = '';
+			sidebarBox.removeAttribute('unifiedsidebar-unified');
 		}
 		this.updateSize();
 	},
@@ -287,7 +289,7 @@ var UnifiedSidebarForVerticalTabbar = {
 			}
 
 			let width = gBrowser.mTabContainer.boxObject.width+'px';
-			header.style.width = sidebar.style.width = sidebarBox.style.width = width;
+			sidebarBox.style.width = width;
 
 			let height = this.height < 0 ? parseInt(browserBox.height / 2) : this.height ;
 			let offset = parseInt(sidebarBox.style.bottom.replace('px', ''));
@@ -303,13 +305,18 @@ var UnifiedSidebarForVerticalTabbar = {
 			}
 
 			sidebarBox.style.height = height+'px';
-			sidebar.style.height = (height - header.boxObject.height)+'px';
+			Array.slice(sidebarBox.childNodes)
+				.forEach(function(aItem) {
+					if (aItem != sidebar)
+						height -= aItem.boxObject.height;
+				});
+			sidebar.style.height = height+'px';
 		}
 		else {
 			sidebarBox.style.bottom = '';
 			sidebarBox.style.left = '';
 
-			header.style.width = sidebar.style.width = sidebarBox.style.width = '';
+			sidebarBox.style.width = '';
 
 			strip.style.marginBottom = '';
 			if (isFloating && this.isVertical(gBrowser)) { // Tree Style Tab
