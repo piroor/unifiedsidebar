@@ -211,7 +211,8 @@ var UnifiedSidebarForVerticalTabbar = {
 
 	domains : [
 		'verttabbar.', // VertTabbar https://addons.mozilla.org/firefox/addon/8045
-		'extensions.tabkit.' // Tab Kit https://addons.mozilla.org/firefox/addon/5447
+		'extensions.tabkit.', // Tab Kit https://addons.mozilla.org/firefox/addon/5447
+		'extensions.tabutils.' // Tab Utilities https://addons.mozilla.org/firefox/addon/tab-utilities/
 	],
 	observe : function(aSubject, aTopic, aPrefName)
 	{
@@ -221,6 +222,7 @@ var UnifiedSidebarForVerticalTabbar = {
 		{
 			case 'verttabbar.position':
 			case 'extensions.tabkit.tabbarPosition':
+			case 'extensions.tabutils.tabBarPosition':
 				this.updateStyle();
 				return;
 
@@ -333,14 +335,16 @@ var UnifiedSidebarForVerticalTabbar = {
 		var sidebarBox = this.sidebarBox;
 
 		var rootBox = document.documentElement.boxObject;
-		var browserBox = document.getElementById('verticaltabs-box') ? // Vertical Tabs ( https://addons.mozilla.org/firefox/addon/108862/ )
+		var browserBox = (
+						document.getElementById('verticaltabs-box') ||  // Vertical Tabs ( https://addons.mozilla.org/firefox/addon/108862/ )
+						('tabutils' in window) // Tab Utilities https://addons.mozilla.org/firefox/addon/tab-utilities/
+					) ?
 							document.getElementById('browser').boxObject :
 							gBrowser.boxObject ;
 		var strip = this.getTabStrip(gBrowser);
 		var isFloating = window.getComputedStyle(strip, '').getPropertyValue('position') != 'static'
 
 		if (this.isVertical(gBrowser) && !this.sidebarHidden) {
-
 			sidebarBox.style.bottom = (rootBox.height - (browserBox.screenY - rootBox.screenY) - browserBox.height)+'px';
 
 			let tabbarBox = gBrowser.mTabContainer.boxObject;
