@@ -6,7 +6,7 @@
                    em:id="unifiedsidebar@piro.sakura.ne.jp"
                    em:name="Unified Sidebar"
                    em:version="0.1.2011111101"
-                   em:creator="SHIMODA Hiroshi"
+                   em:creator="YUKI &quot;Piro&quot; Hiroshi"
                    em:description="Unifies the sidebar and vertical tab bar."
                    em:homepageURL="http://piro.sakura.ne.jp/xul/unifiedsidebar/">
 <!--
@@ -23,7 +23,7 @@
                        em:name="Unified Sidebar"
                        em:description="Unifies the sidebar and vertical tab bar."
                        em:homepageURL="http://piro.sakura.ne.jp/xul/_unifiedsidebar.html.en"
-                       em:creator="SHIMODA Hiroshi">
+                       em:creator="YUKI &quot;Piro&quot; Hiroshi">
       </RDF:Description>
     </em:localized>
     <em:localized>
@@ -31,7 +31,7 @@
                        em:name="Unified Sidebar"
                        em:description="サイドバーを縦型のタブバーに統合します。"
                        em:homepageURL="http://piro.sakura.ne.jp/xul/_unifiedsidebar.html"
-                       em:creator="SHIMODA Hiroshi">
+                       em:creator="YUKI &quot;Piro&quot; Hiroshi">
       </RDF:Description>
     </em:localized>
 
