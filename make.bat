@@ -1,3 +1,3 @@
 copy buildscript\makexpi.sh .\
-bash makexpi.sh unifiedsidebar version=0
+bash makexpi.sh -n unifiedsidebar -o
 del makexpi.sh
