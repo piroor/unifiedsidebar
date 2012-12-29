@@ -8,7 +8,8 @@
                    em:version="0.1.2011111101"
                    em:creator="YUKI &quot;Piro&quot; Hiroshi"
                    em:description="Unifies the sidebar and vertical tab bar."
-                   em:homepageURL="http://piro.sakura.ne.jp/xul/unifiedsidebar/">
+                   em:homepageURL="http://piro.sakura.ne.jp/xul/unifiedsidebar/"
+                   em:type="2">
 <!--
                    em:iconURL="chrome://unifiedsidebar/content/icon.png"
                    em:optionsURL="chrome://unifiedsidebar/content/config.xul"
