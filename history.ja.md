@@ -1,5 +1,7 @@
 # 更新履歴
 
+ - master/HEAD
+   * jarファイルを含めない形のパッケージングに変更
  - 0.1.2011111101
    * [Tab Utilities (1.2preX)](https://addons.mozilla.org/firefox/addon/tab-utilities/)の縦型タブバーに対応
  - 0.1.2011021901

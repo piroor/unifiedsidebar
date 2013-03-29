@@ -1,5 +1,7 @@
 # History
 
+ - master/HEAD
+   * Modified: "jar" archive is no longer included.
  - 0.1.2011111101
    * Improved: Works with vertical tab bar of [Tab Utilities (1.2preX)](https://addons.mozilla.org/firefox/addon/tab-utilities/).
  - 0.1.2011021901
