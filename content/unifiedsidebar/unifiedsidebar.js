@@ -14,7 +14,7 @@
  * The Original Code is the Unified Sidebar.
  *
  * The Initial Developer of the Original Code is YUKI "Piro" Hiroshi.
- * Portions created by the Initial Developer are Copyright (C) 2010-2011
+ * Portions created by the Initial Developer are Copyright (C) 2010-2014
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s): YUKI "Piro" Hiroshi <piro.outsider.reflex@gmail.com>
@@ -111,9 +111,9 @@ var UnifiedSidebarForVerticalTabbar = {
 		var menu = document.getElementById('tt-toolbar-properties');
 		if (menu) menu.addEventListener('command', this, false);
 
-		this.addPrefListener(this);
+		this.prefs.addPrefListener(this);
 
-		this.height = this.getPref(this.PREF_HEIGHT);
+		this.height = this.prefs.getPref(this.PREF_HEIGHT);
 	},
 
 	initWithDelay : function()
@@ -135,7 +135,7 @@ var UnifiedSidebarForVerticalTabbar = {
 		var menu = document.getElementById('tt-toolbar-properties');
 		if (menu) menu.removeEventListener('command', this, false);
 
-		this.removePrefListener(this);
+		this.prefs.removePrefListener(this);
 
 		this.endResize();
 	},
@@ -204,7 +204,7 @@ var UnifiedSidebarForVerticalTabbar = {
 	{
 		var sidebarBox = this.sidebarBox.boxObject;
 		this.height = sidebarBox.screenY + sidebarBox.height - aEvent.screenY + this.resizingOffsetY;
-		this.setPref(this.PREF_HEIGHT, this.height);
+		this.prefs.setPref(this.PREF_HEIGHT, this.height);
 		this.updateSize();
 	},
 
@@ -227,8 +227,9 @@ var UnifiedSidebarForVerticalTabbar = {
 				return;
 
 			case 'extensions.tabkit.sidebarPosition': // top/bottom sidebar breaks the flexibility.
-				if (this.getPref(aPrefName) != 1 || this.getPref(aPrefName) != 2) {
-					this.setPref(aPrefName, 1);
+				if (this.prefs.getPref(aPrefName) != 1 ||
+					this.prefs.getPref(aPrefName) != 2) {
+					this.prefs.setPref(aPrefName, 1);
 				}
 				return;
 
@@ -406,7 +407,7 @@ var UnifiedSidebarForVerticalTabbar = {
 (function() {
 	var namespace = {};
 	Components.utils.import('resource://unifiedsidebar-modules/prefs.js', namespace);
-	UnifiedSidebarForVerticalTabbar.__proto__ = namespace.prefs;
+	UnifiedSidebarForVerticalTabbar.prefs = namespace.prefs;
 })();
 
 window.addEventListener('DOMContentLoaded', UnifiedSidebarForVerticalTabbar, false);
