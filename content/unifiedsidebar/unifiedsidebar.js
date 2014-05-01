@@ -102,8 +102,8 @@ var UnifiedSidebarForVerticalTabbar = {
 		window.addEventListener('load', this, false);
 		window.addEventListener('unload', this, false);
 		window.addEventListener('resize', this, false);
-		window.addEventListener('TreeStyleTabAutoHideStateChange', this, false);
-		window.addEventListener('TreeStyleTabTabbarPositionChanged', this, false);
+		window.addEventListener('nsDOMTreeStyleTabAutoHideStateChange', this, false);
+		window.addEventListener('nsDOMTreeStyleTabTabbarPositionChanged', this, false);
 		this.sidebarBox.addEventListener('DOMAttrModified', this, false);
 		this.sidebarHeader.addEventListener('mousedown', this, false);
 
@@ -126,8 +126,8 @@ var UnifiedSidebarForVerticalTabbar = {
 	{
 		window.removeEventListener('unload', this, false);
 		window.removeEventListener('resize', this, false);
-		window.removeEventListener('TreeStyleTabAutoHideStateChange', this, false);
-		window.removeEventListener('TreeStyleTabTabbarPositionChanged', this, false);
+		window.removeEventListener('nsDOMTreeStyleTabAutoHideStateChange', this, false);
+		window.removeEventListener('nsDOMTreeStyleTabTabbarPositionChanged', this, false);
 		this.sidebarBox.removeEventListener('DOMAttrModified', this, false);
 		this.sidebarHeader.removeEventListener('mousedown', this, false);
 
@@ -163,11 +163,11 @@ var UnifiedSidebarForVerticalTabbar = {
 				window.setTimeout(function(aSelf) {
 					aSelf.updateSize();
 				}, 0, this);
-			case 'TreeStyleTabAutoHideStateChange':
+			case 'nsDOMTreeStyleTabAutoHideStateChange':
 				this.updateSize();
 				return;
 
-			case 'TreeStyleTabTabbarPositionChanged':
+			case 'nsDOMTreeStyleTabTabbarPositionChanged':
 				this.updateStyle();
 				return;
 
