@@ -102,10 +102,12 @@ var UnifiedSidebarForVerticalTabbar = {
 		window.addEventListener('load', this, false);
 		window.addEventListener('unload', this, false);
 		window.addEventListener('resize', this, false);
-		window.addEventListener('nsDOMTreeStyleTabAutoHideStateChange', this, false);
-		window.addEventListener('nsDOMTreeStyleTabTabbarPositionChanged', this, false);
 		this.sidebarBox.addEventListener('DOMAttrModified', this, false);
 		this.sidebarHeader.addEventListener('mousedown', this, false);
+
+		// for Tree Style Tab
+		window.addEventListener('nsDOMTreeStyleTabTabbarPositionChanged', this, false);
+		window.addEventListener('nsDOMTreeStyleTabTabbarRendered', this, false);
 
 		// for TotalToolbar + Tree Style Tab on Firefox 4.0 or later
 		var menu = document.getElementById('tt-toolbar-properties');
@@ -126,10 +128,12 @@ var UnifiedSidebarForVerticalTabbar = {
 	{
 		window.removeEventListener('unload', this, false);
 		window.removeEventListener('resize', this, false);
-		window.removeEventListener('nsDOMTreeStyleTabAutoHideStateChange', this, false);
-		window.removeEventListener('nsDOMTreeStyleTabTabbarPositionChanged', this, false);
 		this.sidebarBox.removeEventListener('DOMAttrModified', this, false);
 		this.sidebarHeader.removeEventListener('mousedown', this, false);
+
+		// for Tree Style Tab
+		window.removeEventListener('nsDOMTreeStyleTabTabbarPositionChanged', this, false);
+		window.removeEventListener('nsDOMTreeStyleTabTabbarRendered', this, false);
 
 		// for TotalToolbar + Tree Style Tab on Firefox 4.0 or later
 		var menu = document.getElementById('tt-toolbar-properties');
@@ -163,7 +167,7 @@ var UnifiedSidebarForVerticalTabbar = {
 				window.setTimeout(function(aSelf) {
 					aSelf.updateSize();
 				}, 0, this);
-			case 'nsDOMTreeStyleTabAutoHideStateChange':
+			case 'nsDOMTreeStyleTabTabbarRendered':
 				this.updateSize();
 				return;
 
