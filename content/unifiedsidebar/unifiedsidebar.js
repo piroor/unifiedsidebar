@@ -14,7 +14,7 @@
  * The Original Code is the Unified Sidebar.
  *
  * The Initial Developer of the Original Code is YUKI "Piro" Hiroshi.
- * Portions created by the Initial Developer are Copyright (C) 2010-2014
+ * Portions created by the Initial Developer are Copyright (C) 2010-2016
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s): YUKI "Piro" Hiroshi <piro.outsider.reflex@gmail.com>
@@ -380,11 +380,11 @@ var UnifiedSidebarForVerticalTabbar = {
 			}
 
 			sidebarBox.style.height = height+'px';
-			Array.slice(sidebarBox.childNodes)
-				.forEach(function(aItem) {
-					if (aItem != sidebar)
-						height -= aItem.boxObject.height;
-				});
+			for (let aItem of sidebarBox.childNodes)
+			{
+				if (aItem != sidebar)
+					height -= aItem.boxObject.height;
+			}
 			sidebar.style.height = height+'px';
 		}
 		else {
