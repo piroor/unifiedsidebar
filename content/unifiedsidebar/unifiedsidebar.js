@@ -245,9 +245,9 @@ var UnifiedSidebarForVerticalTabbar = {
 
 	isVertical : function(aTabBrowser)
 	{
-		var box = document.getAnonymousElementByAttribute(aTabBrowser.mTabContainer, 'class', 'tabs-frame') || // Tab Mix Plus
-				aTabBrowser.mTabContainer.mTabstrip ||
-				aTabBrowser.mTabContainer;
+		var box = document.getAnonymousElementByAttribute(aTabBrowser.tabContainer, 'class', 'tabs-frame') || // Tab Mix Plus
+				aTabBrowser.tabContainer.mTabstrip ||
+				aTabBrowser.tabContainer;
 		return (box.getAttribute('orient') || window.getComputedStyle(box, '').getPropertyValue('-moz-box-orient')) == 'vertical';
 	},
 
@@ -352,7 +352,7 @@ var UnifiedSidebarForVerticalTabbar = {
 		if (this.isVertical(gBrowser) && !this.sidebarHidden) {
 			sidebarBox.style.bottom = (rootBox.height - (browserBox.screenY - rootBox.screenY) - browserBox.height)+'px';
 
-			let tabbarBox = gBrowser.mTabContainer.boxObject;
+			let tabbarBox = gBrowser.tabContainer.boxObject;
 			let tabpanelsBox = gBrowser.mPanelContainer.boxObject;
 			if (tabbarBox.screenX <= tabpanelsBox.screenX) {
 				sidebarBox.style.left = (browserBox.screenX - rootBox.screenX)+'px';
@@ -363,7 +363,7 @@ var UnifiedSidebarForVerticalTabbar = {
 				sidebarBox.style.right = (rootBox.width - (browserBox.screenX - rootBox.screenX) - browserBox.width)+'px';
 			}
 
-			let width = gBrowser.mTabContainer.boxObject.width+'px';
+			let width = gBrowser.tabContainer.boxObject.width+'px';
 			sidebarBox.style.width = width;
 
 			let height = this.height < 0 ? parseInt(browserBox.height / 2) : this.height ;
